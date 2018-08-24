@@ -1,0 +1,56 @@
+## directories ######
+##
+Directory for storing ncmpcpp related files.
+Changing it is useful if you want to store
+everything somewhere else and provide command
+line setting for alternative location to config
+file which defines that while launching ncmpcpp.
+##
+#
+ncmpcpp_directory = ~/.ncmpcpp
+#
+##
+Directory for storing downloaded lyrics. It
+defaults to ~/.lyrics since other MPD clients
+(eg. ncmpc) also use that location.
+##
+#
+#lyrics_directory = ~/.lyrics
+#
+###connection settings #####
+#
+mpd_host = 127.0.0.1
+#
+mpd_port = 6600
+#
+mpd_connection_timeout = 5
+#
+Needed for tag editor and file operations to work.
+##
+mpd_music_dir = ~/Music
+
+mpd_crossfade_time = "15"  
+playlist_disable_highlight_delay = "0"  
+playlist_display_mode = "columns"  
+browser_display_mode = "columns"  
+incremental_seeking = "yes"  
+header_visibility = "yes"  
+statusbar_visibility = "yes" 
+follow_now_playing_lyrics = "no"  
+ignore_leading_the = "yes"  
+#song_columns_list_format = "(10)[yellow]{l} (30)[cyan]{t} (30)[66]{a} (25)[green]{b}" 
+     
+song_columns_list_format = "(10)[8]{l} (30)[40]{t} (30)[70]{a} (25)[75]{b}"
+
+colors_enabled = "yes" 
+main_window_color = "white" 
+header_window_color = "white" 
+volume_color = "cyan" 
+progressbar_color = "white"
+progressbar_elapsed_color = "white" 
+statusbar_color = "white" 
+song_status_format = {%t - %a (%b)}|{%t - %a}|{%f}
+color1 = "cyan" 
+color2 = "cyan" 
+active_column_color = "cyan" 
+active_window_border = "blue"  

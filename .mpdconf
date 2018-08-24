@@ -1,0 +1,30 @@
+# See: /usr/share/doc/mpd/mpdconf.example
+
+pid_file "/home/marcus/.mpd/mpd.pid"
+db_file "~/.mpd/mpd.db"
+state_file "~/.mpd/mpdstate"
+playlist_directory "~/.mpd/playlists"
+music_directory "/home/marcus/Music"
+
+#audio_output {
+
+#        type                    "alsa"
+#        name                    "MPD PulseAudio Output"
+#       sink                    "your-sink-name-here"
+#	mixer_type		"software"
+#}
+
+audio_output {
+        type            "alsa"
+        name            "alsa audio"
+	server		"127.0.0.1"
+    mixer_type  "software"
+}
+
+user "marcus"
+
+auto_update "yes"
+
+bind_to_address "127.0.0.1:6600"
+
+restore_paused "yes"
