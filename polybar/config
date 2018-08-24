@@ -1,0 +1,406 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+[colors]
+;background = ${xrdb:color0:#222}
+background = #222
+background-alt = #151515
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #1325fa
+secondary = #e60053
+alert = #bd2c40
+
+blue-1 = #7171ee
+blue-8 = #6161ee
+blue-3 = #5151ee
+blue-6 = #4141ee
+blue-5 = #3131ee
+blue-4 = #2121ee
+blue-7 = #1111ee
+blue-2 = #0101ee
+
+blue-light = #6666ff
+blue-dark = #0505ee
+
+; ================== TOP MAIN ==================
+[bar/top]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = ${colors.blue-light}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = unifont:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+font-3 = unifont:pixelsize=28;1
+
+modules-left = i3 spotify
+modules-center = date time
+modules-right = volume mpd-controls xkeyboard battery powermenu
+
+tray-position = right
+tray-padding = 0
+;tray-transparent = true
+tray-background = #fbad31
+
+;wm-restack = i3
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; ================== TOP ALT ==================
+
+[bar/top-alt]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = ${colors.blue-light}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = unifont:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+font-3 = unifont:pixelsize=28;1
+
+modules-left = left-triangle i3 right-triangle left-triangle spotify right-triangle
+modules-center = left-triangle date right-triangle left-triangle time right-triangle
+modules-right = volume mpd-controls xkeyboard battery powermenu
+
+tray-position = right
+tray-padding = 0
+;tray-transparent = true
+tray-background = #fbad31
+
+;wm-restack = i3
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+; ================== MODULES ==================
+
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.blue-dark}
+
+label-layout = %layout%
+label-layout-underline = ${colors.blue-dark}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+
+ws-icon-0 = "1; 🔲"
+ws-icon-1 = "2; 📖"
+ws-icon-2 = "3; 🌐"
+ws-icon-3 = "4; 🎶"
+ws-icon-4 = "5; 💬"
+ws-icon-default = [X]
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.blue-light}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-underline = ${colors.blue-dark}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python3 ~/.config/polybar/spotify-status.py -f '{artist} - {song}'
+format-underline = ${colors.blue-light}
+
+click-right = "~/.config/polybar/spotify-ctrl.sh next"
+click-left = "~/.config/polybar/spotify-ctrl.sh play"
+
+[module/mpd-controls]
+type = internal/mpd
+
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>
+format-online-underline = ${colors.blue-light}
+
+format-offline = <label-offline>
+format-offline-underline = ${colors.blue-light}
+label-offline = 
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+[module/mpd-songlabel]
+type = internal/mpd
+format-online = <label-song>
+
+format-offline = <label-offline>
+format-offline-underline = ${colors.blue-light}
+label-offline = 
+
+label-song = %title% - %artist%
+
+label-song-maxlen = 50
+label-song-ellipsis = true
+label-song-underline = ${colors.blue-light}
+
+[module/wlan]
+type = internal/network
+interface = 
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = #9f78e1
+label-connected = %essid%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/eth]
+type = internal/network
+interface = 
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/left-triangle]
+type = custom/text
+content = %{T4}◢%{T-}
+
+content-background = ${colors.background}
+content-foreground = ${colors.background-alt}
+
+[module/right-triangle]
+type = custom/text
+content = %{T4}◤%{T-}
+
+content-background = ${colors.background}
+content-foreground = ${colors.background-alt}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =  %d-%m-%Y
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.blue-dark}
+
+label = %date% 
+
+[module/time]
+type = internal/date
+interval = 5
+
+time = %H:%M
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.blue-light}
+
+
+label = %time%
+
+[module/volume]
+type = internal/pulseaudio
+
+label-muted = "muted"
+
+format-volume = <label-volume>
+label-volume = ♪ %percentage%%
+
+label-volume-foreground = ${root.foreground}
+label-volume-underline = ${colors.blue-dark}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 🔇 HI %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ACAD
+full-at = 98
+
+poll-interval = 5
+
+format-charging = <label-charging>
+format-charging-underline = ${colors.blue-light}
+
+format-discharging = <label-discharging>
+format-discharging-underline = ${colors.blue-light}
+
+label-charging =  %percentage%%
+label-discharging =  %percentage%%
+
+[module/powermenu]
+type = custom/menu
+
+expand-left = true
+
+format-spacing = 1
+
+label-open = "  "
+label-open-foreground = ${colors.blue-light}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+; vim:ft=dosini
