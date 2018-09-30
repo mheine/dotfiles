@@ -88,7 +88,7 @@ fif() {
 	if [ "$1" = "" ]; then
 		echo -e "Empty input.\nUsage: 'fif <text to find>'"
 	else
-		grep -Rn "$1" .
+		grep -iRn "$1" .
 	fi
 }
 
@@ -145,7 +145,7 @@ play_random() {
     elif [[ $noOfSlashes -eq 1 ]]; then
     	song=$(echo $path_minus_home | sed 's@.*/@@g' | sed 's@\.mp3@@g')
     	artist=$(echo $path_minus_home | sed 's@/.*@@g' | sed 's@[0-9]*@@g') 
-    	echo "Now playing\033[1;36m" $song "\033[0mfrom\033[1;95m" $artist "\033[0m"
+    	echo "Now playing\033[1;36m" $song "\033[0mfrom\033[1;31m" $artist "\033[0m"
     	mpg123 -q "$trackpath"
     else
     	name=$(echo $trackpath | sed 's@.*/@@g' | sed 's@\.mp3@@g')
@@ -181,11 +181,15 @@ alias lock='gnome-screensaver-command -l'
 #
 #Aliases for programs
 alias s='subl'
-alias chrome='chromium-browser &'
+alias chrome='google-chrome'
 alias image='eog'
 alias dxball='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/DX-ball'
-alias rs='java -jar ~/Diverse/OSBuddy.jar'
+alias pinball='wine .wine/drive_c/Program\ Files\ \(x86\)/Microsoft\ Games/Pinball/pinball.exe'
+alias rs='java -jar ~/Diverse/RuneLite.jar'
 alias unity-editor='cd / && ./opt/Unity/Editor/Unity -force-opengl && cd'
+alias pretty-clock='tty-clock-no-colon -cC7'
+alias emulator='./Git/gambatte/gambatte_qt/bin/gambatte_qt'
+alias gambatte='emulator'
 #
 #Aliases for git
 alias gp='git push'
@@ -205,6 +209,7 @@ alias ..='cd ..'
 #Aliases for commands
 alias resint='. ~/Diverse/restart-internet.sh'
 alias ea='vim ~/.zshrc && . ~/.zshrc'
+alias logout-user='gnome-session-quit'
 #
 #Fun aliases
 alias murder='xkill'
@@ -213,7 +218,8 @@ alias sl='sl -ae'
 alias folder='gnome-open .'
 alias finder='folder'
 alias rt='play_random'
-
+alias music='mpd && ncmpcpp && mpd --kill'
+alias quit='exit'
 #
 #Help find shit
 alias ffind='find . 2>/dev/null | grep -i'
@@ -222,6 +228,7 @@ alias fprocess='fp'
 
 # ls aliases
 alias ll='ls -lh --group-directories-first'
+alias lh='ls -lad .*'
 
 # Saved dir aliases
 alias ra='for x in 0 1 2 3 4 5 6 7 8 9; do rm ~/.savedfolder$x 2> /dev/null; done'
