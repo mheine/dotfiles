@@ -69,17 +69,17 @@ module-margin-right = 0
 
 font-0 = "Office Code Pro":pixelsize=11;1
 font-1 = unifont:fontformat=truetype:size=18:antialias=false;0
-font-2 = FontAwesome:pixelsize=11;1
+font-2 = FontAwesome:pixelsize=12;1
 font-3 = "Office Code Pro":pixelsize=44;1
 
 modules-left = left-triangle i3 right-triangle
 modules-center = left-triangle spotify right-triangle
-modules-right = left-triangle bluetooth-headphones space-4 volume space-4 battery space-4 eth wlan space-4 date space-4 time right-triangle
+modules-right = left-triangle bluetooth-headphones space-2 volume space-4 battery space-4 eth-symbol vpn-symbol wlan space-4 date space-4 time right-triangle
 
 tray-position = none
 tray-padding = 0
-;tray-transparent = true
-tray-background = #fbad31
+tray-transparent = true
+tray-background = ${colors.background}
 
 wm-restack = i3
 
@@ -128,14 +128,14 @@ wrapping-scroll = false
 strip-wsnumbers = true
 
 ; 
-ws-icon-0 = 1;
+ws-icon-0 = 1;
 ws-icon-1 = 2;
 ws-icon-2 = 3;
 ws-icon-3 = 4;
 ws-icon-4 = 5;
-ws-icon-5 = 6;
+ws-icon-5 = 6;
 ws-icon-6 = 7;
-ws-icon-7 = 8;
+ws-icon-7 = 8;
 ws-icon-8 = 9;
 ws-icon-default = 
 
@@ -193,12 +193,19 @@ interval = 1
 exec = bash ~/.config/polybar/bluetooth-headphones.sh
 format-background = ${colors.background-alt}
 
+; ===== VPN =====
+[module/vpn-symbol]
+type = custom/script
+interval = 1
+exec = bash ~/.config/polybar/vpn-symbol.sh
+format-background = ${colors.background-alt}
+
 
 ; ===== WLAN =====
 [module/wlan]
 type = internal/network
 interface = wlp2s0
-interval = 3.0
+interval = 2
 
 format-connected =  <label-connected>
 label-connected = %essid%
@@ -217,16 +224,23 @@ ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
 
+; ===== ETHERNET CUSTOM =====
+[module/eth-symbol]
+type = custom/script
+interval = 1
+exec = bash ~/.config/polybar/eth-symbol.sh
+format-background = ${colors.background-alt}
+
 ; ===== ETH =====
 [module/eth]
 type = internal/network
 interface = enx5855ca25baeb
-interval = 3.0
+interval = 2
 
 format-connected-font = 3
 label-connected = "  "
 
-format-disconnected =
+format-disconnected = "no"
 
 
 ; ===== DATE =====
@@ -271,9 +285,9 @@ poll-interval = 5
 format-charging = <label-charging>
 format-discharging = <label-discharging>
 
-label-charging =  %percentage%%
+label-charging =  %percentage%%
 label-discharging =  %percentage%%
-label-full =  %percentage%%
+label-full =  %percentage%%
 
 
 ; ===== SETTINGS =====
@@ -283,7 +297,7 @@ format-padding = 0
 format-background = ${colors.background-alt}
 
 [global/wm]
-margin-top = 7
+margin-top = 9
 margin-bottom = 5
 
 ; vim:ft=dosini
