@@ -7,30 +7,24 @@
 
 # i3 config file (v4)
 #
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 set $alt Mod1
 
-# needed for i3-gaps
-for_window [class="^.*"] border pixel 1 0
+for_window [class="^.*"] border pixel 0
 
-gaps inner 15
-gaps outer 15
+# Set inner/outer gaps
+gaps inner 10
 
-#smart_gaps on
-
-bindsym $mod+a gaps inner all plus 5
-bindsym $mod+x gaps inner all minus 5
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 10
+# font pango: OpenSansEmoji 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -42,59 +36,61 @@ font pango:monospace 10
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# start a quick and pretty floating terminal
+bindsym Ctrl+$alt+t exec --no-startup-id i3-sensible-terminal -T "floating-terminal"
+
+# kill focused window
+bindsym $mod+Shift+q kill
+bindsym $mod+q kill
+bindsym $alt+F4 kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run
+bindsym $mod+space exec --no-startup-id albert toggle
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym $mod+shift+d exec --no-startup-id i3-dmenu-desktop
+
 # Lock screen
-bindsym $mod+l exec --no-startup-id i3lock-color \
--i /home/marcus/Pictures/Wallpapers/low-poly-lock-png.png \
+bindsym $mod+l exec --no-startup-id i3lock \
+-c 111111 \
 --insidevercolor='#00000000' \
 --insidewrongcolor='#00000000' \
 --insidecolor='#00000000' \
 --ringvercolor='#1133aa55' \
---ringwrongcolor='#aa334455' \
+--ringwrongcolor='#cc222255' \
+--wrongcolor='#eeeeeeff' \
 --ringcolor='#1133aa55' \
---timecolor='#000000ff' \
---datecolor='#000000ff' \
---linecolor='#000000ff' \
+--timecolor='#eeeeeeff' \
+--datecolor='#eeeeeeff' \
+--linecolor='#eeeeeeff' \
 --separatorcolor='#00000000' \
 --keyhlcolor='#2244bb55' \
 --bshlcolor='#55442255' \
 --clock \
+--datestr="%d-%m-%Y" \
 --veriftext="" \
+--noinputtext="..." \
 --wrongtext=""
 
-# Shutdown
-bindsym $mod+Ctrl+q exec --no-startup-id shutdown now
 
-# Reboot
-bindsym $mod+Ctrl+r exec --no-startup-id reboot
-
-# start a terminal
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-bindsym $mod+Shift+Return exec --no-startup-id newworkspace i3-sensible-terminal
-
-# start a quick and pretty floating terminal
-bindsym Ctrl+$alt+t exec --no-startup-id urxvt -name floating
-
-# kill focused window
-bindsym $mod+Shift+q kill
-bindsym $alt+F4 kill
-
-# start dmenu (a program launcher)
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed. I'm also using a patched version of dmenu_run to specify the height.
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec --no-startup-id dmenu_run -p "" -fn "Siji" -h 25
-
-
-# === NAVIGATION ===
-
-# change focus
+# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+odiaeresis move right
+
+# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -112,21 +108,25 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-#bindsym $mod+e layout toggle split
+bindsym $mod+ctrl+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym --whole-window $mod+button2 floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+space focus mode_toggle
 
+# focus the parent container
+bindsym $mod+a focus parent
 
-new_window none
-focus_follows_mouse no
-mouse_warping none
-
+# focus the child container
+#bindsym $mod+d focus child
 
 # === WORKSPACE NAVIGATION ===
+
+focus_follows_mouse no
+mouse_warping none
 
 bindsym $mod+Tab workspace next
 bindsym $alt+Tab workspace next
@@ -137,24 +137,39 @@ bindsym $alt+Shift+Tab workspace prev
 bindsym Ctrl+$alt+Right workspace next
 bindsym Ctrl+$alt+Left workspace prev
 
-bindsym $mod+Ctrl+Left move workspace to output left
-bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+Up move workspace to output up
+bindsym Ctrl+$alt+Up move workspace to output up
+bindsym $mod+Ctrl+Down move workspace to output down
+bindsym Ctrl+$alt+Down move workspace to output down
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2 
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1; workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2 ; workspace number 2 
+bindsym $mod+Shift+2 move container to workspace number 2; workspace number 2 
 bindsym $mod+Shift+3 move container to workspace number 3; workspace number 3
 bindsym $mod+Shift+4 move container to workspace number 4; workspace number 4
 bindsym $mod+Shift+5 move container to workspace number 5; workspace number 5
@@ -164,35 +179,27 @@ bindsym $mod+Shift+8 move container to workspace number 8; workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9; workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10; workspace number 10
 
-
-# === RELOADING / RESTARTING / RESIZING ===
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec --no-startup-id "i3-msg exit"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
+        # These bindings trigger as soon as you enter the resize mode
 
-    # Arrow keys [1-step]
-    bindsym Left resize shrink width 1 px or 1 ppt
-    bindsym Down resize grow height 1 px or 1 ppt
-    bindsym Up resize shrink height 1 px or 1 ppt
-    bindsym Right resize grow width 1 px or 1 ppt
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 1 px or 1 ppt
+        bindsym Down resize grow height 1 px or 1 ppt
+        bindsym Up resize shrink height 1 px or 1 ppt
+        bindsym Right resize grow width 1 px or 1 ppt
 
-    # Arrow keys [5-step]
-    bindsym Control+Left resize shrink width 5 px or 5 ppt
-    bindsym Control+Down resize grow height 5 px or 5 ppt
-    bindsym Control+Up resize shrink height 5 px or 5 ppt
-    bindsym Control+Right resize grow width 5 px or 5 ppt
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -203,27 +210,67 @@ bindsym $mod+r mode "resize"
 # start polybar
 exec_always --no-startup-id $HOME/.config/polybar/polystart.sh
 
+# start albert
+exec_always --no-startup-id albert
+
+# enable arrow keys for volume
+exec_always --no-startup-id $HOME/personal/scripts/fn-keys-shortcuts 
+
 # Enable three finger tap
 exec_always --no-startup-id synclient TapButton3=2
-
-# enable better screen colours during late hours
-exec_always --no-startup-id redshift
 
 # notifications when battery is running low
 exec --no-startup-id i3-battery-popup -n -t 3m
 
+# Try to xrandr some stuff properly
+exec_always --no-startup-id autoxrandr.sh 
+        
 # Background image
-exec --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/abstract-black-low-poly.jpg
+exec_always --no-startup-id feh --bg-fill /home/marcus/pictures/Wallpapers/low-poly-planet-dark.jpg 
 
-# enhanced notifications using dunst (config file located at /home/marcus/.config/dunst/dunstrc)
-exec killall -q notify-osd
-exec --no-startup-id dunst
+# Start compton
+exec_always --no-startup-id compton --config ~/.config/compton.conf -b
+
+# Start the lock screen
+exec_always --no-startup-id xautolock -detectsleep \
+    -time 15 -locker "i3lock \
+        -c 111111 \
+        --insidevercolor='#00000000' \
+        --insidewrongcolor='#00000000' \
+        --insidecolor='#00000000' \
+        --ringvercolor='#1133aa55' \
+        --ringwrongcolor='#cc222255' \
+        --ringcolor='#1133aa55' \
+        --timecolor='#eeeeeeff' \
+        --datecolor='#eeeeeeff' \
+        --linecolor='#eeeeeeff' \
+        --wrongcolor='#eeeeeeff' \
+        --separatorcolor='#00000000' \
+        --keyhlcolor='#2244bb55' \
+        --bshlcolor='#55442255' \
+        --datestr="%d-%m-%Y" \
+        --clock \
+        --textcolor='#eeeeeeff' \
+        --noinputtext="..." \
+        --veriftext='' \
+        --wrongtext=''" \
+    -notify 30 \
+    -notifier "notify-send -u normal -t 8000 'Locker' 'Locking screen in 30 seconds'"
+
+# === PROGRAM SHORTCUTS ===
+
+bindsym $mod+e exec --no-startup-id nautilus
+bindsym $mod+g exec --no-startup-id google-chrome
+bindsym $mod+ctrl+g exec --no-startup-id google-chrome --incognito
 
 
 # === MEDIA KEYS AND SPECIFIC KEYBOARD BINDINGS ===
 
 # printscreen
-bindsym Print exec --no-startup-id scrot -e 'mv $f /home/marcus/Pictures/screenshots/'
+bindsym Print exec --no-startup-id scrot -e 'mv $f /home/marcus/pictures/Screenshots/'
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xps-backlight up # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xps-backlight down # decrease screen brightness
 
 # volume (using amixer)
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 10%+ && killall -SIGUSR1 i3status
@@ -238,25 +285,13 @@ bindsym XF86AudioPlay exec --no-startup-id "dbus-send --print-reply --dest=org.m
 bindsym XF86AudioNext exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 bindsym XF86AudioPrev exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 
-# brightness (using light)
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10 # decrease screen brightness
-
-
-# === PROGRAM SHORTCUTS ===
-
-bindsym $mod+e exec --no-startup-id nautilus
-bindsym $mod+g exec --no-startup-id google-chrome
-
-
-# === PROGRAM-SPECIFIC WORKSPACES ===
-
-for_window [instance="floating"] floating enable border pixel 1
-
+# === SETTINGS FOR SPECIFIC PROGRAMS ===
+for_window [class="Code"] move to workspace number 9; workspace number 9
+for_window [class="(?i)Slack"] move to workspace number 4; workspace number 4
+for_window [class="(?i)Spotify"] move to workspace number 5; workspace number 5
 for_window [class="(?i)subl"] move to workspace number 2; workspace number 2
-for_window [class="chrome"] move to workspace number 3; workspace number 3
-for_window [class="Spotify"] move to workspace number 4; workspace number 4
-for_window [class="Slack"] move to workspace number 5; workspace number 5
 
-
-
+for_window [class="(?i)Blueman-manager"] floating enable resize set 1500 800
+for_window [class="floating"] floating enable
+for_window [title="floating-terminal"] floating enable
+for_window [class="(?i)Nautilus"] floating enable resize set 1800 1000
