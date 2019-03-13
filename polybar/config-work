@@ -1,4 +1,4 @@
-;==========================================================
+	;==========================================================
 ;
 ;
 ;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
@@ -39,14 +39,14 @@ blue-2 = #0101ee
 blue-light = #6666ff
 blue-dark = #0505ee
 
-; ================== TOP ALT ==================
+; ================== TOP WORK BAR ==================
 
 [bar/work-top]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 60
 ;offset-x = 1%
-;offset-y = 1%
+;offset-y = 20%
 radius = 0.0
 fixed-center = true
 dpi = 200
@@ -61,19 +61,18 @@ line-color = #f00
 border-size = 0
 border-color = ${colors.blue-light}
 
-padding-left = 2
-padding-right = 2
+padding-left = 1
+padding-right = 1
 
-module-margin-left = 0
-module-margin-right = 0
+module-margin = 0
 
-font-0 = "Office Code Pro":pixelsize=11;1
+font-0 = "Office Code Pro":pixelsize=11;5
 font-1 = unifont:fontformat=truetype:size=18:antialias=false;0
-font-2 = FontAwesome:pixelsize=12;1
-font-3 = "Office Code Pro":pixelsize=44;1
+font-2 = FontAwesome:pixelsize=12;5
+font-3 = "Office Code Pro":pixelsize=32:antialias=false;6
 
 modules-left = left-triangle i3 right-triangle
-modules-center = left-triangle spotify right-triangle
+modules-center = spotify-left spotify spotify-right
 modules-right = left-triangle bluetooth-headphones space-2 volume space-4 battery space-4 eth-symbol vpn-symbol wlan space-4 date space-4 time right-triangle
 
 tray-position = none
@@ -82,6 +81,7 @@ tray-transparent = true
 tray-background = ${colors.background}
 
 wm-restack = i3
+override-redirect = false
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -101,6 +101,13 @@ type = custom/text
 content = %{T4}◤%{T-}
 
 content-background = ${colors.background}
+content-foreground = ${colors.background-alt}
+
+[module/space-1]
+type = custom/text
+content = " "
+
+content-background = ${colors.background-alt}
 content-foreground = ${colors.background-alt}
 
 [module/space-2]
@@ -175,15 +182,34 @@ label-separator-foreground = ${colors.background}
 ; ===== SPOTIFY =====
 [module/spotify]
 type = custom/script
-interval = 0
+interval = 1
 format-prefix = "   "
 format-prefix-font = 3
-format = <label>
-exec = python3 ~/.config/polybar/spotify-status.py -f '{artist} - {song}'
+format = <label>        
+exec = bash ~/.config/polybar/simple-spotify-status.sh
 format-background = ${colors.background-alt}		
 
-click-right = "~/.config/polybar/spotify-ctrl.sh next"
 click-left = "~/.config/polybar/spotify-ctrl.sh play"
+click-right = "~/.config/polybar/spotify-ctrl.sh next"
+click-middle = "~/.config/polybar/spotify-ctrl.sh previous"
+
+; ===== SPOTIFY LEFT TRIANGLE =====
+[module/spotify-left]
+type = custom/script
+interval = 1
+format-font = 4
+exec = bash ~/.config/polybar/spotify-triangles.sh left
+format-foreground = ${colors.background-alt}
+format-background = ${colors.background}
+
+; ===== SPOTIFY RIGHT TRIANGLE =====
+[module/spotify-right]
+type = custom/script
+interval = 1
+format-font = 4
+exec = bash ~/.config/polybar/spotify-triangles.sh right
+format-foreground = ${colors.background-alt}
+format-background = ${colors.background}
 
 
 ; ===== BLUETOOTH =====
@@ -208,9 +234,9 @@ interface = wlp2s0
 interval = 2
 
 format-connected =  <label-connected>
-label-connected = %essid%
+label-connected = %{A1:x-terminal-emulator -e "nmtui-connect" & :}%essid%%{A}
 
-format-disconnected =
+format-disconnected = " Disconnected"
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -297,7 +323,7 @@ format-padding = 0
 format-background = ${colors.background-alt}
 
 [global/wm]
-margin-top = 9
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 40
 
 ; vim:ft=dosini
