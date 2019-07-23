@@ -14,15 +14,17 @@ set $alt Mod1
 
 for_window [class="^.*"] border pixel 0
 
-gaps inner 15
+# Set inner/outer gaps
+gaps inner 10
+
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+# font pango: OpenSansEmoji 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -38,7 +40,7 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # start a quick and pretty floating terminal
-bindsym Ctrl+$alt+t exec --no-startup-id terminator -name floating
+bindsym Ctrl+$alt+t exec --no-startup-id i3-sensible-terminal -T "floating-terminal"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -51,7 +53,7 @@ bindsym $mod+space exec --no-startup-id albert toggle
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym --release $mod exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+shift+d exec --no-startup-id i3-dmenu-desktop
 
 # Lock screen
 bindsym $mod+l exec --no-startup-id i3lock \
@@ -60,7 +62,8 @@ bindsym $mod+l exec --no-startup-id i3lock \
 --insidewrongcolor='#00000000' \
 --insidecolor='#00000000' \
 --ringvercolor='#1133aa55' \
---ringwrongcolor='#aa334455' \
+--ringwrongcolor='#cc222255' \
+--wrongcolor='#eeeeeeff' \
 --ringcolor='#1133aa55' \
 --timecolor='#eeeeeeff' \
 --datecolor='#eeeeeeff' \
@@ -69,8 +72,11 @@ bindsym $mod+l exec --no-startup-id i3lock \
 --keyhlcolor='#2244bb55' \
 --bshlcolor='#55442255' \
 --clock \
+--datestr="%d-%m-%Y" \
 --veriftext="" \
+--noinputtext="..." \
 --wrongtext=""
+
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -106,6 +112,7 @@ bindsym $mod+ctrl+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym --whole-window $mod+button2 floating toggle
 
 # change focus between tiling / floating windows
 # bindsym $mod+space focus mode_toggle
@@ -149,16 +156,16 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1; workspace number 1
@@ -200,10 +207,7 @@ bindsym $mod+r mode "resize"
 
 # === STARTUP APPLICATIONS ===
 
-# start polybar
-exec_always --no-startup-id $HOME/.config/polybar/polystart.sh
-
-# start polybar
+# start albert
 exec_always --no-startup-id albert
 
 # enable arrow keys for volume
@@ -213,10 +217,51 @@ exec_always --no-startup-id $HOME/personal/scripts/fn-keys-shortcuts
 exec_always --no-startup-id synclient TapButton3=2
 
 # notifications when battery is running low
-exec_always --no-startup-id i3-battery-popup -n -t 3m
+exec --no-startup-id i3-battery-popup -n -t 3m
 
+# Try to xrandr some stuff properly
+exec_always --no-startup-id autoxrandr.sh 
+        
 # Background image
-exec_always --no-startup-id feh --bg-fill /home/marcus/Pictures/Wallpapers/abstract-black-low-poly.jpg
+exec_always --no-startup-id feh --bg-fill /home/marcus/pictures/Wallpapers/low-poly-planet-dark.jpg 
+
+# Start compton
+exec_always --no-startup-id compton --config ~/.config/compton.conf -b
+
+# Set the default icon using the name
+exec_always --no-startup-id i3-msg rename workspace number 1 to "1: "
+
+# Rename workspaces, automagically
+exec_always --no-startup-id ~/.config/i3/autoname_workspaces.py &
+
+# start polybar
+exec_always --no-startup-id $HOME/.config/polybar/polystart.sh
+
+# Start the lock screen
+exec_always --no-startup-id xautolock -detectsleep \
+    -time 15 -locker "i3lock \
+        -c 111111 \
+        --insidevercolor='#00000000' \
+        --insidewrongcolor='#00000000' \
+        --insidecolor='#00000000' \
+        --ringvercolor='#1133aa55' \
+        --ringwrongcolor='#cc222255' \
+        --ringcolor='#1133aa55' \
+        --timecolor='#eeeeeeff' \
+        --datecolor='#eeeeeeff' \
+        --linecolor='#eeeeeeff' \
+        --wrongcolor='#eeeeeeff' \
+        --separatorcolor='#00000000' \
+        --keyhlcolor='#2244bb55' \
+        --bshlcolor='#55442255' \
+        --datestr="%d-%m-%Y" \
+        --clock \
+        --textcolor='#eeeeeeff' \
+        --noinputtext="..." \
+        --veriftext='' \
+        --wrongtext=''" \
+    -notify 30 \
+    -notifier "notify-send -u normal -t 8000 'Locker' 'Locking screen in 30 seconds'"
 
 # === PROGRAM SHORTCUTS ===
 
@@ -228,7 +273,10 @@ bindsym $mod+ctrl+g exec --no-startup-id google-chrome --incognito
 # === MEDIA KEYS AND SPECIFIC KEYBOARD BINDINGS ===
 
 # printscreen
-bindsym Print exec --no-startup-id scrot -e 'mv $f /home/marcus/Pictures/Screenshots/'
+bindsym Print exec --no-startup-id scrot -e 'mv $f /home/marcus/pictures/Screenshots/'
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xps-backlight up # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xps-backlight down # decrease screen brightness
 
 # volume (using amixer)
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 10%+ && killall -SIGUSR1 i3status
@@ -249,5 +297,7 @@ for_window [class="(?i)Slack"] move to workspace number 4; workspace number 4
 for_window [class="(?i)Spotify"] move to workspace number 5; workspace number 5
 for_window [class="(?i)subl"] move to workspace number 2; workspace number 2
 
-for_window [class="(?i)Blueman-manager"] floating enable resize set 1500 800
-for_window [instance="floating"] floating enable border pixel 1
+for_window [class="(?i)Blueman-manager"] floating enable resize set 1500 800; i3-msg move position center > /dev/null;
+for_window [class="floating"] floating enable
+for_window [title="floating-terminal"] floating enable
+for_window [class="(?i)Nautilus"] floating enable resize set 1800 1000

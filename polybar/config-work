@@ -1,4 +1,4 @@
-	;==========================================================
+;==========================================================
 ;
 ;
 ;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
@@ -17,36 +17,19 @@
 ;==========================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
 background = #444
 background-alt = #090909
-;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
 primary = #1325fa
 secondary = #e60053
 alert = #bd2c40
 
-blue-1 = #7171ee
-blue-8 = #6161ee
-blue-3 = #5151ee
-blue-6 = #4141ee
-blue-5 = #3131ee
-blue-4 = #2121ee
-blue-7 = #1111ee
-blue-2 = #0101ee
-
-blue-light = #6666ff
-blue-dark = #0505ee
-
 ; ================== TOP WORK BAR ==================
 
 [bar/work-top]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 60
-;offset-x = 1%
-;offset-y = 20%
 radius = 0.0
 fixed-center = true
 dpi = 200
@@ -59,7 +42,6 @@ line-size = 6
 line-color = #f00
 
 border-size = 0
-border-color = ${colors.blue-light}
 
 padding-left = 1
 padding-right = 1
@@ -135,41 +117,41 @@ wrapping-scroll = false
 strip-wsnumbers = true
 
 ; 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-default = 
+; ws-icon-0 = 1;
+; ws-icon-1 = 2;
+; ws-icon-2 = 3;
+; ws-icon-3 = 4;
+; ws-icon-4 = 5;
+; ws-icon-5 = 6;
+; ws-icon-6 = 7;
+; ws-icon-7 = 8;
+; ws-icon-8 = 9;
+; ws-icon-default = 
 
 label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %icon%
+label-focused = %name%
 label-focused-background = ${colors.background-alt}
 label-focused-underline = #555
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %icon%
+label-unfocused = %name%
 label-unfocused-padding = 2
 label-unfocused-background = ${colors.background-alt}
 label-unfocused-underline = ${colors.background-alt}
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %icon%
+label-visible = %name%
 label-visible-background = ${colors.background-alt}
 label-visible-underline = ${colors.background-alt}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %icon%
+label-urgent = %name%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
@@ -236,11 +218,8 @@ interval = 2
 format-connected =  <label-connected>
 label-connected = %{A1:x-terminal-emulator -e "nmtui-connect" & :}%essid%%{A}
 
-format-disconnected = " Disconnected"
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected =  <label-disconnected>
+label-disconnected = %{A1:x-terminal-emulator -e "nmtui-connect" & :}Disconnected%{A}
 
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -275,7 +254,8 @@ type = internal/date
 interval = 5
 format-prefix-font = 3
 date =  %d-%m-%Y
-label = %date% 
+label = %{A1:bash ~/.config/polybar/launch-google-cal.sh:} %date% %{A} 
+
 
 
 ; ===== TIME =====
