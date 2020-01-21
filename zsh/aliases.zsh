@@ -1,4 +1,5 @@
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
+#
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
@@ -11,8 +12,26 @@
 #
 #
 #Work aliases
-alias work-desktop='xrandr --output eDP-1-1 --primary --auto --output DP-1-1 --above eDP-1-1 --auto
-'
+alias work-desktop='xrandr --output eDP-1 --primary --auto --output DP-1 --above eDP-1 --auto'
+alias offtouch="xinput --disable  'DLL07BE:01 06CB:7A13 Touchpad'"
+alias ontouch="xinput --enable  'DLL07BE:01 06CB:7A13 Touchpad'"
+alias spe='cd /home/marcus/dewire/supernova-payment-engine-dev/'
+alias appm='cd /home/marcus/dewire/appmarket'
+alias appmarket='appm'
+alias dc='docker-compose'
+alias dcb='docker-compose build && docker-compose down && docker-compose up'
+alias dcu='docker-compose up'
+alias dcr='docker-compose run --publish=4000:4000 --publish=5000:5000 --rm spe-application -i'
+alias dca="docker-compose run --rm spe-application -c 'spe-init-database && spe-unit-tests && spe-system-tests && spe-postman-tests'"
+
+alias dbash-core="docker exec -it supernova-payment-engine-dev_spe-application_1 bash"
+alias dbash-arvato="docker exec -it supernova-payment-engine-dev_spe-arvato-pm_1 bash"
+alias dbash-trustly="docker exec -it supernova-payment-engine-dev_spe-trustly-pm_1 bash"
+alias dbash-swish="docker exec -it supernova-payment-engine-dev_spe-swish-pm_1 bash"
+alias dbash-nordea="docker exec -it supernova-payment-engine-dev_spe-nordea-pm_1 bash"
+alias dbash-database="docker exec -it supernova-payment-engine-dev_spe-database_1 bash"
+
+
 
 #General aliases
 alias clr='clear'
@@ -40,7 +59,8 @@ alias gp='git push'
 alias gl='git pull'
 alias ga='git add .'
 alias gs='git status'
-alias glog='git log --oneline --decorate --color --graph'
+alias glog='git log --oneline --decorate --color --graph | head'
+alias glong='git log --oneline --decorate --color --graph'
 alias gcm='git commit -m'
 alias grand='git commit -m "$(echo $(curl -s http://whatthecommit.com/index.txt)) [wtc]"'
 #
@@ -69,6 +89,7 @@ alias quit='exit'
 alias ffind='find . 2>/dev/null | grep -i'
 alias fp='ps aufx | grep -i'
 alias fprocess='fp'
+alias fpack='apt search'
 
 # ls aliases
 alias ll='ls -lh --group-directories-first'
