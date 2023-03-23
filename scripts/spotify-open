@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# != "1" ]; then
+    echo "Expected exactly one argument!" | tee -a ~/.spotify-open.log
+    exit 1
+fi
+
+uri=$(echo $1 | sed -e 's/:\/\//\:/' | sed -e 's/\//:/' | sed -e 's/\?.*//')
+
+if pgrep spotify > /dev/null; then
+    echo "Opening: $uri" | tee -a ~/.spotify-open.log
+    dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:"$uri"
+    wmctrl -x -a spotify
+else
+    spotify --force-device-scale-factor=3 --uri="$uri"
+fi

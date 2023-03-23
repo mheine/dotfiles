@@ -1,5 +1,5 @@
 [global]
-font = Iosevka Term 11
+font = Office Code Pro 12
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -70,7 +70,7 @@ hide_duplicates_count = yes
 # The width can be negative.  In this case the actual width is the
 # screen width minus the width defined in within the geometry option.
 #geometry = "250x50-40+40"
-geometry = "900x900-50+70"
+geometry = "900x900-20+80"
 
 # Shrink window if it's smaller than the width.  Will be ignored if
 # width is 0.
@@ -115,7 +115,7 @@ show_indicators = no
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
 # This adds empty space above and under the text.
-line_height = 3
+line_height = 10
 
 # Draw a line of "separatpr_height" pixel height between two
 # notifications.
@@ -126,7 +126,7 @@ separator_height = 2
 padding = 6
 
 # Horizontal padding.
-horizontal_padding = 6
+horizontal_padding = 30
 
 # Define a color for the separator.
 # possible values are:
@@ -148,11 +148,11 @@ dmenu = /usr/bin/dmenu -p dunst:
 browser = /usr/bin/firefox -new-tab
 
 # Align icons left/right/off
-icon_position = off
+icon_position = left
 max_icon_size = 80
 
 # Paths to default icons.
-icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
+icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/:/usr/share/pixmaps/
 
 frame_width = 3
 frame_color = "#8EC07C"
@@ -183,23 +183,23 @@ context = ctrl+shift+period
 # Otherwise the "#" and following would be interpreted as a comment.
 frame_color = "#3B7C87"
 foreground = "#EEEEEE"
-background = "#191311"
+background = "#222222"
 #background = "#2B313C"
-timeout = 4
+timeout = 3
 
 [urgency_normal]
 frame_color = "#3B7C87"
 foreground = "#EEEEEE"
-background = "#191311"
+background = "#222222"
 #background = "#2B313C"
-timeout = 6
+timeout = 4
 
 [urgency_critical]
 frame_color = "#B7472A"
 foreground = "#EEEEEE"
-background = "#191311"
+background = "#222222"
 #background = "#2B313C"
-timeout = 8
+timeout = 12h
 
 
 # Every section that isn't one of the above is interpreted as a rules to
@@ -220,6 +220,24 @@ timeout = 8
 # to "".
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
+
+[Slack]
+appname = Slack
+new_icon = slack-bw
+timeout = 4
+
+[Spotify]
+appname = Spotify
+timeout = 2
+
+[idle]
+body = "*now idle*"
+script = /home/marcus/.config/dunst/alert.sh
+
+[side-project]
+body = "*###########*"
+script = /home/marcus/.config/dunst/alert.sh
+
 
 #[espeak]
 #    summary = "*"

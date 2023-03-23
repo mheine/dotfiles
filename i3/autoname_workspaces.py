@@ -53,6 +53,7 @@ WINDOW_ICONS = {
     'atom': fa.icons['code'],
     'banshee': fa.icons['play'],
     'blender': fa.icons['cube'],
+    'blueman-manager': '',
     'chromium': fa.icons['chrome'],
     'cura': fa.icons['cube'],
     'code': fa.icons['cube'],
@@ -90,6 +91,7 @@ WINDOW_ICONS = {
     'pavucontrol': fa.icons['volume-up'],
     'postman': fa.icons['space-shuttle'],
     'rhythmbox': fa.icons['play'],
+    'net-runelite-client-runelite': fa.icons['gamepad'],
     'slack': fa.icons['slack'],
     'slic3r.pl': fa.icons['cube'],
     'spotify': fa.icons['spotify'],  # could also use the 'spotify' icon

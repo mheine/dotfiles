@@ -57,10 +57,13 @@ modules-left = left-triangle i3 right-triangle
 modules-center = spotify-left spotify spotify-right
 modules-right = left-triangle bluetooth-headphones space-2 volume space-4 battery space-4 eth-symbol vpn-symbol wlan space-4 date space-4 time right-triangle
 
-tray-position = none
+; change the tray position to "right" when you need a tray
+tray-position = right
 tray-padding = 0
 tray-transparent = true
 tray-background = ${colors.background}
+tray-scale = 1.0
+tray-maxsize = 32
 
 wm-restack = i3
 override-redirect = false
@@ -239,11 +242,11 @@ format-background = ${colors.background-alt}
 ; ===== ETH =====
 [module/eth]
 type = internal/network
-interface = enx5855ca25baeb
+interface = enx28373703bd48
 interval = 2
 
 format-connected-font = 3
-label-connected = "  "
+label-connected = "  ye"
 
 format-disconnected = "no"
 

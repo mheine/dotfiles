@@ -1,0 +1,8 @@
+#!/bin/bash
+
+xmodmap -e 'keysym Prior = XF86AudioRaiseVolume'
+xmodmap -e 'keysym Next = XF86AudioLowerVolume' 
+
+# I realized that I liked being able to HOME and END
+# xmodmap -e 'keysym End = XF86AudioNext'  
+# xmodmap -e 'keysym Home = XF86AudioPrev'

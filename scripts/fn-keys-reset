@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xmodmap -e 'keysym XF86AudioRaiseVolume = Prior'
+xmodmap -e 'keysym XF86AudioLowerVolume = Next' 
+xmodmap -e 'keysym XF86AudioPrev = Home'
+xmodmap -e 'keysym XF86AudioNext = End'  

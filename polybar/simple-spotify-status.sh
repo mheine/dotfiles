@@ -34,5 +34,10 @@ else
   ARTIST=$(sp-metadata | grep "artist" | sed 's/.*|//' | awk -v len=60 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }' 2>&1)
   TITLE=$(sp-metadata | grep "title"  | sed 's/.*|//' | awk -v len=60 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }'  2>&1)
 
+  if [[ $ARTIST =~ "xesam" ]] || [[ $ARTIST =~ "Error org.freedesktop" ]]
+  then
+    echo "What's todays soundtrack?"
+  fi
+
   echo "$ARTIST - $TITLE "
 fi

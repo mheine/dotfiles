@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if ! [ -x "$(command -v subl)" -a -x "$(command -v slack)" -a -x "$(command -v code)" -a -x "$(command -v spotify)" ]; then
+ 	echo 'Error: Sublime/Slack/Spotify/Code is not installed.' >&2
+ 	exit 1
+fi
+
+i3-msg move container to workspace 1
+
+i3-msg focus down
+i3-msg workspace "4"
+spotify --force-device-scale-factor=3 &
+sleep 1
+
+sleep 0.5
+i3-msg focus up
+i3-msg workspace "3"
+firefox &
+sleep 1

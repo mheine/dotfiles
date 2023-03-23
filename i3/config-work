@@ -15,7 +15,7 @@ set $alt Mod1
 for_window [class="^.*"] border pixel 0
 
 # Set inner/outer gaps
-gaps inner 10
+# gaps inner 2
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -46,6 +46,8 @@ bindsym Ctrl+$alt+t exec --no-startup-id i3-sensible-terminal -T "floating-termi
 bindsym $mod+Shift+q kill
 bindsym $mod+q kill
 bindsym $alt+F4 kill
+
+bindsym $mod+shift+s sticky toggle
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -127,6 +129,12 @@ bindsym $mod+a focus parent
 
 focus_follows_mouse no
 mouse_warping none
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
 
 bindsym $mod+Tab workspace next
 bindsym $alt+Tab workspace next
@@ -218,15 +226,9 @@ exec_always --no-startup-id synclient TapButton3=2
 
 # notifications when battery is running low
 exec --no-startup-id i3-battery-popup -n -t 3m
-
-# Try to xrandr some stuff properly
-exec_always --no-startup-id autoxrandr.sh 
         
 # Background image
 exec_always --no-startup-id feh --bg-fill /home/marcus/pictures/Wallpapers/low-poly-planet-dark.jpg 
-
-# Start compton
-exec_always --no-startup-id compton --config ~/.config/compton.conf -b
 
 # Set the default icon using the name
 exec_always --no-startup-id i3-msg rename workspace number 1 to "1: "
@@ -236,6 +238,12 @@ exec_always --no-startup-id ~/.config/i3/autoname_workspaces.py &
 
 # start polybar
 exec_always --no-startup-id $HOME/.config/polybar/polystart.sh
+
+# Try to only time out after 30 minutes
+exec_always --no-startup-id xset s 1800 
+
+# Start compton
+exec --no-startup-id pkill compton && compton --config ~/.config/compton.conf -b
 
 # Start the lock screen
 exec_always --no-startup-id xautolock -detectsleep \
@@ -263,6 +271,9 @@ exec_always --no-startup-id xautolock -detectsleep \
     -notify 30 \
     -notifier "notify-send -u normal -t 8000 'Locker' 'Locking screen in 30 seconds'"
 
+# Try to xrandr some stuff properly
+exec_always --no-startup-id autoxrandr.sh 
+
 # === PROGRAM SHORTCUTS ===
 
 bindsym $mod+e exec --no-startup-id nautilus
@@ -274,9 +285,10 @@ bindsym $mod+ctrl+g exec --no-startup-id google-chrome --incognito
 
 # printscreen
 bindsym Print exec --no-startup-id scrot -e 'mv $f /home/marcus/pictures/Screenshots/'
+bindsym --release ctrl+Print exec --no-startup-id scrot -s -e 'mv $f /home/marcus/pictures/Screenshots/'
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xps-backlight up # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xps-backlight down # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo brightnessctl s +10% # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo brightnessctl s 10%- # decrease screen brightness
 
 # volume (using amixer)
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 10%+ && killall -SIGUSR1 i3status
@@ -292,12 +304,11 @@ bindsym XF86AudioNext exec --no-startup-id "dbus-send --print-reply --dest=org.m
 bindsym XF86AudioPrev exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 
 # === SETTINGS FOR SPECIFIC PROGRAMS ===
-for_window [class="Code"] move to workspace number 9; workspace number 9
-for_window [class="(?i)Slack"] move to workspace number 4; workspace number 4
-for_window [class="(?i)Spotify"] move to workspace number 5; workspace number 5
-for_window [class="(?i)subl"] move to workspace number 2; workspace number 2
-
-for_window [class="(?i)Blueman-manager"] floating enable resize set 1500 800; i3-msg move position center > /dev/null;
+#for_window [class="(?i)Blueman-manager"] floating enable resize set 1500 1200; i3-msg move position center > /dev/null;
+#for_window [class="(?i)pavucontrol"] floating enable resize set 1500 1200; i3-msg move position center > /dev/null;
+for_window [class="(?i)PulseUi"] floating enable resize set 500 800; i3-msg move position center > /dev/null;
 for_window [class="floating"] floating enable
 for_window [title="floating-terminal"] floating enable
-for_window [class="(?i)Nautilus"] floating enable resize set 1800 1000
+for_window [title="Microsoft Teams Notification"] floating enable
+for_window [class="Kazam"] floating enable
+for_window [class="simplescreenrecorder"] floating enable

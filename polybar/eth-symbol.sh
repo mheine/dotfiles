@@ -2,7 +2,7 @@
 
 NMCLI_OUTPUT="$(nmcli)"
 
-if [[ $NMCLI_OUTPUT == *"enx5855ca25baeb: connected "* ]]; then
+if [[ $NMCLI_OUTPUT =~ (enx)(.*)(: connected to) ]]; then
   echo " "
 else
   echo ""
